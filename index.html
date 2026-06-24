@@ -469,8 +469,14 @@
           <label class="opcion"><input type="radio" name="campMasTiempo" value="No"> <span>No</span></label>
         </div>
       </div>
+    </div>
 
-      <!-- P9 -->
+        <!-- ═══════════════════════════════════════
+         BLOQUE 3 — EVALUACIÓN DE LA CAMPAÑA
+    ═══════════════════════════════════════ -->
+    <div class="bloque hidden" id="bloque3">
+      <div class="bloque-titulo">Bloque 6 · Temas para la campaña informativa de la ONPE</div>
+<!-- P9 -->
       <div class="pregunta" id="p9">
         <label class="principal"><span class="num">12</span>¿En qué considera usted que la campaña informativa de la ONPE debería enfocarse? <em>(Puede marcar más de una opción)</em></label>
         <div class="opciones">
@@ -482,14 +488,13 @@
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre los locales de votación"> <span>Informar sobre los locales de votación</span></label>
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Otros"> <span>Otros</span></label>
         </div>
-      </div>
-    </div>
-
+       </div>
+    </div>   
     <!-- ═══════════════════════════════════════
          BLOQUE 4 — IMAGEN INSTITUCIONAL
     ═══════════════════════════════════════ -->
     <div class="bloque" id="bloque4">
-      <div class="bloque-titulo">Bloque 6 · Imagen Institucional</div>
+      <div class="bloque-titulo">Bloque 7 · Imagen Institucional</div>
 
       <!-- P10 -->
       <div class="pregunta" id="p10">
@@ -601,7 +606,7 @@ const FECHA_CIERRE = new Date('2026-07-25T04:59:00Z'); // 15 jul 2026 11:59 PM P
 
 // #AQUI SE RESETEAN LAS VERSIONES PARA VOLVER A INTENTAR ENVIAR
 // Cambia 'v1' a 'v2', 'v3', etc. para permitir que dispositivos que ya respondieron vuelvan a intentarlo
-const STORAGE_KEY = 'onpe_sv2026_v5';
+const STORAGE_KEY = 'onpe_sv2026_v6';
 
 // ── Verificar cierre ──
 if (new Date() > FECHA_CIERRE) {
