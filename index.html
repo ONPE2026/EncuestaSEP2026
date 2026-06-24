@@ -494,11 +494,11 @@
       <div class="pregunta" id="p10">
         <label class="principal"><span class="num">13</span>Luego de la campaña informativa, ¿su opinión sobre la ONPE cambió?</label>
         <div class="escala">
-          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Mejoró mucho"><label for="op1"><span class="num-grande">1</span><span>Mejoró mucho</span></label></div>
-          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Mejoró algo"><label for="op2"><span class="num-grande">2</span><span>Mejoró algo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op3" name="opinionONPE" value="3 - Se mantiene igual"><label for="op3"><span class="num-grande">3</span><span>Se mantiene igual</span></label></div>
-          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Empeoró algo"><label for="op4"><span class="num-grande">4</span><span>Empeoró algo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Empeoró mucho"><label for="op5"><span class="num-grande">5</span><span>Empeoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Empeoró mucho"><label for="op1"><span class="num-grande">1</span><span>Empeoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Empeoró algo"><label for="op2"><span class="num-grande">2</span><span>Empeoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op3" name="opinionONPE" value="3 - Se mantuvo"><label for="op3"><span class="num-grande">3</span><span>Se mantuvo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Mejoró algo"><label for="op4"><span class="num-grande">4</span><span>Mejoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Mejoró mucho"><label for="op5"><span class="num-grande">5</span><span>Mejoró mucho</span></label></div>
         </div>
         <div class="opciones" style="margin-top:10px">
           <label class="opcion"><input type="radio" name="opinionONPE" value="No tenía opinión previa"> <span>No tenía opinión previa de la ONPE</span></label>
@@ -538,7 +538,7 @@
 
 <footer class="footer-strip">
   <div class="footer-contacto">
-    Para cualquier duda o consulta comuníquese a la línea gratuita: <a href="tel:417 - 0360">417 - 0360</a>
+    Para cualquier duda o consulta comuníquese a la línea gratuita: <a href="tel:417-0630">417-0630</a>
     &nbsp;·&nbsp; o al correo <a href="mailto:informes@onpe.gob.pe">informes@onpe.gob.pe</a>
   </div>
   <!-- <div class="footer-legal">
@@ -596,11 +596,11 @@ const REGIONES = [
 // ═══════════════════════════════════════════════════════════
 
 // #AQUI SE CAMBIA HORA — fecha/hora de cierre de la encuesta (hora de Perú UTC-5)
-const FECHA_CIERRE = new Date('2026-07-25T04:59:00Z'); // 15 jul 2026 11:59 PM PET
+const FECHA_CIERRE = new Date('2026-07-16T04:59:00Z'); // 15 jul 2026 11:59 PM PET
 
 // #AQUI SE RESETEAN LAS VERSIONES PARA VOLVER A INTENTAR ENVIAR
 // Cambia 'v1' a 'v2', 'v3', etc. para permitir que dispositivos que ya respondieron vuelvan a intentarlo
-const STORAGE_KEY = 'onpe_sv2026_v4';
+const STORAGE_KEY = 'onpe_sv2026_v3';
 
 // ── Verificar cierre ──
 if (new Date() > FECHA_CIERRE) {
@@ -698,14 +698,21 @@ document.querySelectorAll('input[name="voto"]').forEach(r => r.addEventListener(
   if (val === 'Si') {
     // Mostrar P5 (¿tuvo inconveniente al votar?)
     document.getElementById('p2').classList.remove('hidden');
+    // Bloque 3 visible por defecto; se ocultará si P5=No
   } else {
-    // Ocultar P5 y limpiar su respuesta
+    // No votó: ocultar P5, mostrar Bloque 3 directamente
     document.getElementById('p2').classList.add('hidden');
     document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
+    document.getElementById('bloqueInconvenientes').classList.remove('hidden');
   }
 }));
 
-// P5 no controla P6 (P6 siempre visible); solo se usa para guardar el dato
+// P5 controla visibilidad del Bloque 3: solo se oculta si responde "No"
+document.querySelectorAll('input[name="inconveniente"]').forEach(r => r.addEventListener('change', () => {
+  const val = radio('inconveniente')?.value;
+  document.getElementById('bloqueInconvenientes').classList.toggle('hidden', val === 'No');
+  if (val === 'No') document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
+}));
 
 document.querySelectorAll('input[name="seInformo"]').forEach(r => r.addEventListener('change', () => {
   const val = radio('seInformo')?.value;
