@@ -365,15 +365,7 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- ═══════════════════════════════════════
-         BLOQUE INCONVENIENTES
-    ═══════════════════════════════════════ -->
-    <div class="bloque" id="bloqueInconvenientes">
-      <div class="bloque-titulo">Bloque 3 · Inconvenientes durante la Segunda Elección Presidencial 2026</div>
-
-      <!-- P2 -->
+      <!-- P2 — solo visible si P1=Sí -->
       <div class="pregunta hidden" id="p2">
         <label class="principal"><span class="num">5</span>¿Tuvo algún inconveniente al momento de votar?</label>
         <div class="opciones">
@@ -382,8 +374,16 @@
         </div>
       </div>
 
-      <!-- P3 — visible solo si P2=Sí -->
-      <div class="pregunta hidden" id="p3">
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE INCONVENIENTES — visible para todos
+    ═══════════════════════════════════════ -->
+    <div class="bloque" id="bloqueInconvenientes">
+      <div class="bloque-titulo">Bloque 3 · Inconvenientes durante la Segunda Elección Presidencial 2026</div>
+
+      <!-- P3 — siempre visible -->
+      <div class="pregunta" id="p3">
         <label class="principal"><span class="num">6</span>¿Qué inconveniente tuvo? <em style="font-weight:400;font-size:0.85rem">(Puede marcar más de una opción)</em></label>
         <div class="opciones">
           <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="No pude ubicar fácilmente mi local de votación"> <span>No pude ubicar fácilmente mi local de votación</span></label>
@@ -596,7 +596,7 @@ const REGIONES = [
 // ═══════════════════════════════════════════════════════════
 
 // #AQUI SE CAMBIA HORA — fecha/hora de cierre de la encuesta (hora de Perú UTC-5)
-const FECHA_CIERRE = new Date('2026-07-16T04:59:00Z'); // 15 jul 2026 11:59 PM PET
+const FECHA_CIERRE = new Date('2026-07-25T04:59:00Z'); // 15 jul 2026 11:59 PM PET
 
 // #AQUI SE RESETEAN LAS VERSIONES PARA VOLVER A INTENTAR ENVIAR
 // Cambia 'v1' a 'v2', 'v3', etc. para permitir que dispositivos que ya respondieron vuelvan a intentarlo
@@ -696,25 +696,16 @@ function radio(name){ return document.querySelector(`input[name="${name}"]:check
 document.querySelectorAll('input[name="voto"]').forEach(r => r.addEventListener('change', () => {
   const val = radio('voto')?.value;
   if (val === 'Si') {
-    // Mostrar P5 (¿tuvo inconveniente?), ocultar P6 hasta que responda P5
+    // Mostrar P5 (¿tuvo inconveniente al votar?)
     document.getElementById('p2').classList.remove('hidden');
-    document.getElementById('p3').classList.add('hidden');
-    document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
-    // Limpiar respuesta previa de inconveniente si venía de "No"
-    document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
-  } else if (val === 'No') {
-    // Saltar P5, ir directo a P6 (checkboxes de tipos de inconveniente)
+  } else {
+    // Ocultar P5 y limpiar su respuesta
     document.getElementById('p2').classList.add('hidden');
     document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
-    document.getElementById('p3').classList.remove('hidden');
   }
 }));
 
-document.querySelectorAll('input[name="inconveniente"]').forEach(r => r.addEventListener('change', () => {
-  const val = radio('inconveniente')?.value;
-  document.getElementById('p3').classList.toggle('hidden', val !== 'Si');
-  if (val !== 'Si') document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x=>x.checked=false);
-}));
+// P5 no controla P6 (P6 siempre visible); solo se usa para guardar el dato
 
 document.querySelectorAll('input[name="seInformo"]').forEach(r => r.addEventListener('change', () => {
   const val = radio('seInformo')?.value;
@@ -763,9 +754,7 @@ document.getElementById('encuesta').addEventListener('submit', function(e){
 
   if (!radio('voto'))       { showErr('Por favor responda la pregunta 13.'); return; }
   if (visible('p2') && !radio('inconveniente'))
-                            { showErr('Por favor responda la pregunta 14.'); return; }
-  if (visible('p3') && !document.querySelector('input[name="inconvenienteTipo"]:checked'))
-                            { showErr('Por favor responda la pregunta 9.'); return; }
+                            { showErr('Por favor responda la pregunta 5.'); return; }
   if (!radio('seInformo'))  { showErr('Por favor responda la pregunta 13.'); return; }
   if (visible('p5') && !document.querySelector('input[name="medios"]:checked'))
                             { showErr('Por favor responda la pregunta 14.'); return; }
