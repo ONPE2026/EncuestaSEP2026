@@ -455,7 +455,7 @@
           <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="La importancia de ir a votar"> <span>La importancia de ir a votar</span></label>
           <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Que la ONPE está presente y al servicio de todos"> <span>Que la ONPE está presente y al servicio de todos en el día de las elecciones</span></label>
           <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Cómo capacitarme como elector o miembro de mesa"> <span>Cómo capacitarme, como elector o miembro de mesa, así como su importancia</span></label>
-          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Como consultar mi local de votación"> <span>Como consultar mi local de votación</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Cómo consultar mi local de votación"> <span>Como consultar mi local de votación</span></label>
           <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Nada en particular"> <span>Nada en particular</span></label>
           <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Otros"> <span>Otros</span></label>
         </div>
@@ -494,11 +494,11 @@
       <div class="pregunta" id="p10">
         <label class="principal"><span class="num">13</span>Luego de la campaña informativa, ¿su opinión sobre la ONPE cambió?</label>
         <div class="escala">
-          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Empeoró mucho"><label for="op1"><span class="num-grande">1</span><span>Mejoró mucho</span></label></div>
-          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Empeoró algo"><label for="op2"><span class="num-grande">2</span><span>Mejoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Empeoró mucho"><label for="op1"><span class="num-grande">1</span><span>Empeoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Empeoró algo"><label for="op2"><span class="num-grande">2</span><span>Empeoró algo</span></label></div>
           <div class="escala-item"><input type="radio" id="op3" name="opinionONPE" value="3 - Se mantuvo"><label for="op3"><span class="num-grande">3</span><span>Se mantuvo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Mejoró algo"><label for="op4"><span class="num-grande">4</span><span>Empeoró algo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Mejoró mucho"><label for="op5"><span class="num-grande">5</span><span>Empeoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Mejoró algo"><label for="op4"><span class="num-grande">4</span><span>Mejoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Mejoró mucho"><label for="op5"><span class="num-grande">5</span><span>Mejoró mucho</span></label></div>
         </div>
         <div class="opciones" style="margin-top:10px">
           <label class="opcion"><input type="radio" name="opinionONPE" value="No tenía opinión previa"> <span>No tenía opinión previa de la ONPE</span></label>
@@ -730,6 +730,21 @@ document.querySelectorAll('input[name="seInformo"]').forEach(r => r.addEventList
 }));
 
 // ═══════════════════════════════════════════════
+// EXCLUSIVIDAD: "No recuerdo" en P8 (medios)
+// ═══════════════════════════════════════════════
+document.querySelectorAll('input[name="medios"]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const noRecuerdo = document.querySelector('input[name="medios"][value="No recuerdo"]');
+    if (cb.value === 'No recuerdo' && cb.checked) {
+      document.querySelectorAll('input[name="medios"]').forEach(x => {
+        if (x !== cb) x.checked = false;
+      });
+    } else if (cb.checked && noRecuerdo) {
+      noRecuerdo.checked = false;
+    }
+  });
+});
+
 // EXCLUSIVIDAD: "Nada en particular" en P7
 // ═══════════════════════════════════════════════
 document.querySelectorAll('input[name="recuerdaCampana"]').forEach(cb => {
