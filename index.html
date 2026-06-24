@@ -379,7 +379,7 @@
     <!-- ═══════════════════════════════════════
          BLOQUE INCONVENIENTES — visible para todos
     ═══════════════════════════════════════ -->
-    <div class="bloque" id="bloqueInconvenientes">
+    <div class="bloque hidden" id="bloqueInconvenientes">
       <div class="bloque-titulo">Bloque 3 · Inconvenientes durante la Segunda Elección Presidencial 2026</div>
 
       <!-- P3 — siempre visible -->
@@ -494,11 +494,11 @@
       <div class="pregunta" id="p10">
         <label class="principal"><span class="num">13</span>Luego de la campaña informativa, ¿su opinión sobre la ONPE cambió?</label>
         <div class="escala">
-          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Empeoró mucho"><label for="op1"><span class="num-grande">1</span><span>Empeoró mucho</span></label></div>
-          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Empeoró algo"><label for="op2"><span class="num-grande">2</span><span>Empeoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Empeoró mucho"><label for="op1"><span class="num-grande">1</span><span>Mejoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Empeoró algo"><label for="op2"><span class="num-grande">2</span><span>Mejoró algo</span></label></div>
           <div class="escala-item"><input type="radio" id="op3" name="opinionONPE" value="3 - Se mantuvo"><label for="op3"><span class="num-grande">3</span><span>Se mantuvo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Mejoró algo"><label for="op4"><span class="num-grande">4</span><span>Mejoró algo</span></label></div>
-          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Mejoró mucho"><label for="op5"><span class="num-grande">5</span><span>Mejoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Mejoró algo"><label for="op4"><span class="num-grande">4</span><span>Empeoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Mejoró mucho"><label for="op5"><span class="num-grande">5</span><span>Empeoró mucho</span></label></div>
         </div>
         <div class="opciones" style="margin-top:10px">
           <label class="opcion"><input type="radio" name="opinionONPE" value="No tenía opinión previa"> <span>No tenía opinión previa de la ONPE</span></label>
@@ -696,9 +696,11 @@ function radio(name){ return document.querySelector(`input[name="${name}"]:check
 document.querySelectorAll('input[name="voto"]').forEach(r => r.addEventListener('change', () => {
   const val = radio('voto')?.value;
   if (val === 'Si') {
-    // Mostrar P5 (¿tuvo inconveniente al votar?)
+    // Mostrar P5; Bloque 3 espera hasta que P5=Sí
     document.getElementById('p2').classList.remove('hidden');
-    // Bloque 3 visible por defecto; se ocultará si P5=No
+    document.getElementById('bloqueInconvenientes').classList.add('hidden');
+    document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
+    document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
   } else {
     // No votó: ocultar P5, mostrar Bloque 3 directamente
     document.getElementById('p2').classList.add('hidden');
@@ -707,11 +709,11 @@ document.querySelectorAll('input[name="voto"]').forEach(r => r.addEventListener(
   }
 }));
 
-// P5 controla visibilidad del Bloque 3: solo se oculta si responde "No"
+// P5=Sí → mostrar Bloque 3; P5=No → ocultar Bloque 3
 document.querySelectorAll('input[name="inconveniente"]').forEach(r => r.addEventListener('change', () => {
   const val = radio('inconveniente')?.value;
-  document.getElementById('bloqueInconvenientes').classList.toggle('hidden', val === 'No');
-  if (val === 'No') document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
+  document.getElementById('bloqueInconvenientes').classList.toggle('hidden', val !== 'Si');
+  if (val !== 'Si') document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
 }));
 
 document.querySelectorAll('input[name="seInformo"]').forEach(r => r.addEventListener('change', () => {
