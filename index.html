@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta - ONPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --onpe-red:    #003770;   /* azul oscuro principal   */
+    --onpe-mid:    #2971B9;   /* azul medio              */
+    --onpe-pale:   #88BFE5;   /* azul claro / acentos    */
+    --onpe-dark:   #002356;   /* hover / dark            */
+    --onpe-light:  #EBF4FF;   /* fondo tenue             */
+    --onpe-gray:   #2E3A4E;
+    --onpe-border: #88BFE5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    color: var(--onpe-gray);
+    min-height: 100vh;
+  }
+  header {
+    background: #fff;
+    border-bottom: 3px solid var(--onpe-pale);
+    text-align: center;
+  }
+  .header-titulo {
+    color: var(--onpe-red);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 14px 20px 8px;
+  }
+  .header-subtitulo {
+    color: var(--onpe-mid);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding-bottom: 10px;
+  }
+  .header-banner img {
+    max-width: 56%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  @media (max-width: 600px) {
+    .header-banner img { max-width: 100%; }
+  }
+  .container {
+    max-width: 720px;
+    margin: 28px auto 60px;
+    padding: 0 16px;
+  }
+  .bloque {
+    background: white;
+    border-radius: 10px;
+    border-top: 5px solid var(--onpe-red);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+    padding: 24px 28px;
+    margin-bottom: 22px;
+  }
+  .bloque-titulo {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--onpe-mid);
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--onpe-pale);
+  }
+  .pregunta { margin-bottom: 22px; }
+  .pregunta:last-child { margin-bottom: 0; }
+  .pregunta label.principal {
+    display: block;
+    font-weight: 600;
+    font-size: 0.97rem;
+    margin-bottom: 10px;
+    color: #2b2b2b;
+  }
+  .pregunta label.principal span.num {
+    background: var(--onpe-mid);
+    color: white;
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .opciones { display: flex; flex-direction: column; gap: 8px; }
+  .opcion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .opcion:hover { border-color: var(--onpe-red); background: var(--onpe-light); }
+  .opcion input[type="radio"],
+  .opcion input[type="checkbox"] {
+    accent-color: var(--onpe-red);
+    width: 17px; height: 17px;
+    flex-shrink: 0;
+  }
+  .opcion span { font-size: 0.93rem; }
+  .escala {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    margin-top: 4px;
+    align-items: stretch;
+  }
+  .escala-item {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    display: flex;
+  }
+  .escala-item input[type="radio"] { display: none; }
+  .escala-item label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 4px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.72rem;
+    color: #666;
+    width: 100%;
+    word-break: keep-all;
+    hyphens: none;
+  }
+  .escala-item label .num-grande {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #bbb;
+    transition: color 0.15s;
+  }
+  .escala-item input[type="radio"]:checked + label {
+    border-color: var(--onpe-red);
+    background: var(--onpe-light);
+  }
+  .escala-item input[type="radio"]:checked + label .num-grande {
+    color: var(--onpe-red);
+  }
+  select, textarea, input[type="text"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 7px;
+    font-size: 0.93rem;
+    font-family: inherit;
+    color: var(--onpe-gray);
+    transition: border-color 0.15s;
+  }
+  select:focus, textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--onpe-red);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  .geo-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  @media(max-width:600px) { .geo-row { grid-template-columns: 1fr; } }
+  .geo-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  .hidden { display: none !important; }
+  .btn-enviar {
+    width: 100%;
+    padding: 14px;
+    background: var(--onpe-mid);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-enviar:hover { background: var(--onpe-red); }
+  .btn-enviar:disabled { background: #ccc; cursor: not-allowed; }
+  .msg-exito {
+    background: #EBF4FF;
+    border: 1px solid #88BFE5;
+    border-radius: 10px;
+    padding: 32px 28px;
+    text-align: center;
+    display: none;
+  }
+  .msg-exito h2 { color: #003770; font-size: 1.25rem; margin-bottom: 10px; font-weight: 700; }
+  .msg-exito p { color: #333; font-size: 0.95rem; line-height: 1.6; }
+  .msg-error {
+    background: #EAF2FB;
+    border: 1.5px solid var(--onpe-red);
+    border-radius: 7px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: var(--onpe-dark);
+    margin-top: 10px;
+    display: none;
+  }
+  .nota-skip {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .aviso-privacidad {
+    font-size: 0.78rem;
+    color: #666;
+    background: #f7f9fc;
+    border: 1px solid var(--onpe-border);
+    border-radius: 7px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .footer-strip {
+    background: var(--onpe-red);
+    color: #c8dff4;
+    font-size: 0.76rem;
+    line-height: 1.65;
+    padding: 24px 32px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .footer-strip a {
+    color: var(--onpe-pale);
+    text-decoration: none;
+  }
+  .footer-strip a:hover { text-decoration: underline; }
+  .footer-strip .footer-contacto {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+  }
+  .footer-strip .footer-legal {
+    max-width: 680px;
+    margin: 0 auto 10px;
+  }
+  .footer-strip .footer-copy {
+    margin-top: 10px;
+    opacity: 0.55;
+    font-size: 0.7rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ► Reemplaza banner.jpg con la URL real de tu imagen de cabecera -->
+
+<!-- MENSAJE: encuesta cerrada -->
+<div id="msgCerrada" style="display:none;max-width:600px;margin:60px auto;padding:32px;background:#EBF4FF;border:1px solid #88BFE5;border-radius:10px;text-align:center;font-family:Poppins,sans-serif;">
+  <h2 style="color:#003770;margin-bottom:12px;">Encuesta cerrada</h2>
+  <p style="color:#333;">El período de respuesta ha concluido. Agradecemos su participación.</p>
+</div>
+
+<!-- MENSAJE: ya respondió -->
+<div id="msgYaRespondio" style="display:none;max-width:600px;margin:60px auto;padding:32px;background:#EBF4FF;border:1px solid #88BFE5;border-radius:10px;text-align:center;font-family:Poppins,sans-serif;">
+  <h2 style="color:#003770;margin-bottom:12px;">Ya registró su respuesta</h2>
+  <p style="color:#333;">Este dispositivo ya participó en la encuesta. Solo se permite una respuesta por dispositivo.</p>
+</div>
+
+<header>
+  <div class="header-titulo">Encuesta sobre la campaña informativa - Segunda Elección Presidencial 2026</div>
+  <div class="header-subtitulo">ONPE — Oficina Nacional de Procesos Electorales</div>
+  <div class="header-banner">
+    <img src="banner.jpg" alt="ONPE — Encuesta Segunda Vuelta 2026">
+  </div>
+</header>
+
+<div class="container">
+  <form id="encuesta">
+
+    <div class="bloque" id="bloque5">
+      <div class="bloque-titulo">Bloque 1 · Datos Sociodemográficos</div>
+
+      <!-- P12 -->
+      <div class="pregunta" id="p12">
+        <label class="principal"><span class="num">1</span>Indique su grupo etario</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="grupoEtario" value="18-29" required> <span>De 18 a 29 años</span></label>
+          <label class="opcion"><input type="radio" name="grupoEtario" value="30-44"> <span>De 30 a 44 años</span></label>
+          <label class="opcion"><input type="radio" name="grupoEtario" value="45-59"> <span>De 45 a 59 años</span></label>
+          <label class="opcion"><input type="radio" name="grupoEtario" value="60+"> <span>De 60 a más</span></label>
+        </div>
+      </div>
+
+      <!-- P13 -->
+      <div class="pregunta" id="p13">
+        <label class="principal"><span class="num">2</span>Indique su sexo</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="sexo" value="Femenino" required> <span>Femenino</span></label>
+          <label class="opcion"><input type="radio" name="sexo" value="Masculino"> <span>Masculino</span></label>
+          <label class="opcion"><input type="radio" name="sexo" value="Prefiero no decirlo"> <span>Prefiero no decirlo</span></label>
+        </div>
+      </div>
+
+      <!-- P14 — Ubicación geográfica -->
+      <div class="pregunta" id="p14">
+        <label class="principal"><span class="num">3</span>Indique su región de residencia</label>
+        <div class="geo-row">
+          <div class="geo-group">
+            <label for="sel-region">Región</label>
+            <select id="sel-region" name="region" required>
+              <option value="">— Seleccionar —</option>
+            </select>
+          </div>
+          <div class="geo-group" id="grupo-provincia">
+            <label for="sel-provincia">Provincia</label>
+            <select id="sel-provincia" name="provincia" disabled>
+              <option value="">— Seleccionar —</option>
+            </select>
+          </div>
+          <div class="geo-group" id="grupo-distrito">
+            <label for="sel-distrito">Distrito</label>
+            <select id="sel-distrito" name="distrito" disabled>
+              <option value="">— Seleccionar —</option>
+            </select>
+          </div>
+        </div>
+        <input type="hidden" name="ubigeo" id="ubigeo-hidden">
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE 1 — VOTO EN SEGUNDA VUELTA
+    ═══════════════════════════════════════ -->
+    <div class="bloque" id="bloque1">
+      <div class="bloque-titulo">Bloque 2 · Voto en la Segunda Vuelta</div>
+
+      <!-- P1 -->
+      <div class="pregunta" id="p1">
+        <label class="principal"><span class="num">4</span>En esta segunda vuelta, ¿usted votó?</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="voto" value="Si" required> <span>Sí</span></label>
+          <label class="opcion"><input type="radio" name="voto" value="No"> <span>No</span></label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE INCONVENIENTES
+    ═══════════════════════════════════════ -->
+    <div class="bloque" id="bloqueInconvenientes">
+      <div class="bloque-titulo">Bloque 3 · Inconvenientes durante la Segunda Elección Presidencial 2026</div>
+
+      <!-- P2 -->
+      <div class="pregunta hidden" id="p2">
+        <label class="principal"><span class="num">5</span>¿Tuvo algún inconveniente al momento de votar?</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="inconveniente" value="Si"> <span>Sí</span></label>
+          <label class="opcion"><input type="radio" name="inconveniente" value="No"> <span>No</span></label>
+        </div>
+      </div>
+
+      <!-- P3 — visible solo si P2=Sí -->
+      <div class="pregunta hidden" id="p3">
+        <label class="principal"><span class="num">6</span>¿Qué inconveniente tuvo? <em style="font-weight:400;font-size:0.85rem">(Puede marcar más de una opción)</em></label>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="No pude ubicar fácilmente mi local de votación"> <span>No pude ubicar fácilmente mi local de votación</span></label>
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="Cambiaron mi local de votación"> <span>Cambiaron mi local de votación</span></label>
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="Fue difícil ubicar mi mesa de sufragio"> <span>Fue difícil ubicar mi mesa de sufragio</span></label>
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="Mi mesa de sufragio demoró en abrir"> <span>Mi mesa de sufragio demoró en abrir</span></label>
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="No pude votar porque mi mesa de sufragio no abrió"> <span>No pude votar porque mi mesa de sufragio no abrió</span></label>
+          <label class="opcion"><input type="checkbox" name="inconvenienteTipo" value="Otros"> <span>Otros</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE 3 — EXPOSICIÓN A LA CAMPAÑA
+    ═══════════════════════════════════════ -->
+    <div class="bloque" id="bloque2">
+      <div class="bloque-titulo">Bloque 4 · Exposición a la campaña informativa de la ONPE</div>
+
+      <!-- P4 -->
+      <div class="pregunta" id="p4">
+        <label class="principal"><span class="num">7</span>En los últimos 30 días, ¿recuerda haberse informado sobre la segunda vuelta?</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="seInformo" value="Si" required> <span>Sí</span></label>
+          <label class="opcion"><input type="radio" name="seInformo" value="No"> <span>No</span></label>
+        </div>
+      </div>
+
+      <!-- P5 — visible solo si P4=Sí -->
+      <div class="pregunta hidden" id="p5">
+        <label class="principal"><span class="num">8</span>¿En qué medios de comunicación recuerda haber visto, leído o escuchado publicidad acerca de la segunda vuelta? <em style="font-weight:400;font-size:0.85rem">(Puede marcar más de una opción)</em></label>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="medios" value="Televisión"> <span>Televisión</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Radio"> <span>Radio</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Redes sociales (Facebook/Instagram/TikTok/otros)"> <span>Redes sociales (Facebook / Instagram / TikTok / otros)</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Periódicos"> <span>Periódicos</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Anuncios en la vía pública"> <span>Anuncios en la vía pública</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Publicidad en centros comerciales"> <span>Publicidad en centros comerciales</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Personal de la ONPE"> <span>Personal de la ONPE</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Publicidad en el aeropuerto"> <span>Publicidad en el aeropuerto</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="Otros"> <span>Otros</span></label>
+          <label class="opcion"><input type="checkbox" name="medios" value="No recuerdo"> <span>No recuerdo</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE 3 — EVALUACIÓN DE LA CAMPAÑA
+    ═══════════════════════════════════════ -->
+    <div class="bloque hidden" id="bloque3">
+      <div class="bloque-titulo">Bloque 5 · Evaluación de la campaña informativa de la ONPE</div>
+
+      <!-- P6 -->
+      <div class="pregunta" id="p6">
+        <label class="principal"><span class="num">9</span>En una escala del 1 al 5, ¿qué tan claro le resultó el mensaje de las campañas informativas de la ONPE?</label>
+        <div class="escala">
+          <div class="escala-item"><input type="radio" id="clar1" name="claridadCampana" value="1 - Nada claro"><label for="clar1"><span class="num-grande">1</span><span>Nada claro</span></label></div>
+          <div class="escala-item"><input type="radio" id="clar2" name="claridadCampana" value="2 - Poco claro"><label for="clar2"><span class="num-grande">2</span><span>Poco claro</span></label></div>
+          <div class="escala-item"><input type="radio" id="clar3" name="claridadCampana" value="3 - Ni claro ni confuso"><label for="clar3"><span class="num-grande">3</span><span>Ni claro ni confuso</span></label></div>
+          <div class="escala-item"><input type="radio" id="clar4" name="claridadCampana" value="4 - Algo claro"><label for="clar4"><span class="num-grande">4</span><span>Algo claro</span></label></div>
+          <div class="escala-item"><input type="radio" id="clar5" name="claridadCampana" value="5 - Muy claro"><label for="clar5"><span class="num-grande">5</span><span>Muy claro</span></label></div>
+        </div>
+      </div>
+
+      <!-- P7 -->
+      <div class="pregunta" id="p7">
+        <label class="principal"><span class="num">10</span>¿Qué recuerda de la campaña informativa de la ONPE? <em style="font-weight:400;font-size:0.85rem">(Puede marcar más de una opción)</em></label>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="La participación de varios actores en las elecciones"> <span>La participación de varios actores (ONPE, policía, fuerzas armadas, miembros de mesa) en las elecciones</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="La importancia de ir a votar"> <span>La importancia de ir a votar</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Que la ONPE está presente y al servicio de todos"> <span>Que la ONPE está presente y al servicio de todos en el día de las elecciones</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Cómo capacitarme como elector o miembro de mesa"> <span>Cómo capacitarme, como elector o miembro de mesa, así como su importancia</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Como consultar mi local de votación"> <span>Como consultar mi local de votación</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Nada en particular"> <span>Nada en particular</span></label>
+          <label class="opcion"><input type="checkbox" name="recuerdaCampana" value="Otros"> <span>Otros</span></label>
+        </div>
+      </div>
+
+      <!-- P8 -->
+      <div class="pregunta" id="p8">
+        <label class="principal"><span class="num">11</span>¿Considera que la campaña informativa de la ONPE debería durar más tiempo?</label>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="campMasTiempo" value="Si"> <span>Sí</span></label>
+          <label class="opcion"><input type="radio" name="campMasTiempo" value="No"> <span>No</span></label>
+        </div>
+      </div>
+
+      <!-- P9 -->
+      <div class="pregunta" id="p9">
+        <label class="principal"><span class="num">12</span>¿En qué considera usted que la campaña informativa de la ONPE debería enfocarse? <em>(Puede marcar más de una opción)</em></label>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre la importancia de ir a votar"> <span>Informar sobre la importancia de ir a votar</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre cómo votar correctamente"> <span>Informar sobre cómo votar correctamente</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre el trabajo de la ONPE en las elecciones"> <span>Informar sobre el trabajo de la ONPE en las elecciones</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre cómo capacitarse como elector o miembro de mesa"> <span>Informar sobre cómo capacitarse, ya sea como elector o miembro de mesa</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre cómo saber si uno es miembro de mesa"> <span>Informar sobre cómo saber si uno es miembro de mesa</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Otros"> <span>Otros</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE 4 — IMAGEN INSTITUCIONAL
+    ═══════════════════════════════════════ -->
+    <div class="bloque" id="bloque4">
+      <div class="bloque-titulo">Bloque 6 · Imagen Institucional</div>
+
+      <!-- P10 -->
+      <div class="pregunta" id="p10">
+        <label class="principal"><span class="num">13</span>Luego de la campaña informativa, ¿su opinión sobre la ONPE cambió?</label>
+        <div class="escala">
+          <div class="escala-item"><input type="radio" id="op1" name="opinionONPE" value="1 - Mejoró mucho"><label for="op1"><span class="num-grande">1</span><span>Mejoró mucho</span></label></div>
+          <div class="escala-item"><input type="radio" id="op2" name="opinionONPE" value="2 - Mejoró algo"><label for="op2"><span class="num-grande">2</span><span>Mejoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op3" name="opinionONPE" value="3 - Se mantiene igual"><label for="op3"><span class="num-grande">3</span><span>Se mantiene igual</span></label></div>
+          <div class="escala-item"><input type="radio" id="op4" name="opinionONPE" value="4 - Empeoró algo"><label for="op4"><span class="num-grande">4</span><span>Empeoró algo</span></label></div>
+          <div class="escala-item"><input type="radio" id="op5" name="opinionONPE" value="5 - Empeoró mucho"><label for="op5"><span class="num-grande">5</span><span>Empeoró mucho</span></label></div>
+        </div>
+        <div class="opciones" style="margin-top:10px">
+          <label class="opcion"><input type="radio" name="opinionONPE" value="No tenía opinión previa"> <span>No tenía opinión previa de la ONPE</span></label>
+        </div>
+      </div>
+
+      <!-- P11 -->
+      <div class="pregunta" id="p11">
+        <label class="principal"><span class="num">14</span>¿Cómo calificaría la organización de la segunda vuelta en general?</label>
+        <div class="escala">
+          <div class="escala-item"><input type="radio" id="cal1" name="calificacionOrg" value="1 - Muy mala"><label for="cal1"><span class="num-grande">1</span><span>Muy mala</span></label></div>
+          <div class="escala-item"><input type="radio" id="cal2" name="calificacionOrg" value="2 - Mala"><label for="cal2"><span class="num-grande">2</span><span>Mala</span></label></div>
+          <div class="escala-item"><input type="radio" id="cal3" name="calificacionOrg" value="3 - Regular"><label for="cal3"><span class="num-grande">3</span><span>Regular</span></label></div>
+          <div class="escala-item"><input type="radio" id="cal4" name="calificacionOrg" value="4 - Buena"><label for="cal4"><span class="num-grande">4</span><span>Buena</span></label></div>
+          <div class="escala-item"><input type="radio" id="cal5" name="calificacionOrg" value="5 - Muy buena"><label for="cal5"><span class="num-grande">5</span><span>Muy buena</span></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BLOQUE 5 — SOCIODEMOGRÁFICO
+    ═══════════════════════════════════════ -->
+    <div class="msg-error" id="msgError">Por favor complete todos los campos obligatorios.</div>
+
+    <div class="aviso-privacidad">
+      Los datos recogidos en esta encuesta son confidenciales y se utilizarán exclusivamente para evaluar la campaña informativa de la ONPE. Los resultados se presentarán de forma agregada y no se difundirá información individual. Su tratamiento se rige por la <strong>Ley N.° 29733</strong>, Ley de Protección de Datos Personales.
+    </div>
+
+    <button type="submit" class="btn-enviar" id="btnEnviar">Enviar respuesta</button>
+  </form>
+
+  <div class="msg-exito" id="msgExito">
+    <h2>Sus respuestas han sido registradas correctamente.</h2>
+    <p style="margin-bottom:16px">Gracias por participar en esta encuesta.<br>Su opinión contribuye a mejorar la labor de la ONPE.</p>
+
+  </div>
+
+<footer class="footer-strip">
+  <div class="footer-contacto">
+    Para cualquier duda o consulta comuníquese a la línea gratuita: <a href="tel:417 - 0360">417 - 0360</a>
+    &nbsp;·&nbsp; o al correo <a href="mailto:informes@onpe.gob.pe">informes@onpe.gob.pe</a>
+  </div>
+  <!-- <div class="footer-legal">
+    Los datos de esta encuesta son confidenciales y se utilizarán exclusivamente para evaluar
+    la campaña informativa institucional de la ONPE. Los resultados se presentarán de forma agregada
+    y no se difundirá información individual, conforme a la
+    <strong style="color:#fff">Ley N.° 29733</strong>, Ley de Protección de Datos Personales.
+  </div> -->
+  <div class="footer-copy">ONPE — Oficina Nacional de Procesos Electorales &copy; 2026</div>
+</footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// LISTA DE REGIONES
+// Mapea nombre de pantalla → nombre del archivo JSON
+// en la carpeta /ubigeo/ del repositorio
+// ═══════════════════════════════════════════════
+const REGIONES = [
+  {nombre:"EXTRANJERO",    archivo:null},
+  {nombre:"AMAZONAS",      archivo:"AMAZONAS"},
+  {nombre:"ÁNCASH",        archivo:"ANCASH"},
+  {nombre:"APURÍMAC",      archivo:"APURIMAC"},
+  {nombre:"AREQUIPA",      archivo:"AREQUIPA"},
+  {nombre:"AYACUCHO",      archivo:"AYACUCHO"},
+  {nombre:"CAJAMARCA",     archivo:"CAJAMARCA"},
+  {nombre:"CALLAO",        archivo:"CALLAO"},
+  {nombre:"CUSCO",         archivo:"CUSCO"},
+  {nombre:"HUANCAVELICA",  archivo:"HUANCAVELICA"},
+  {nombre:"HUÁNUCO",       archivo:"HUANUCO"},
+  {nombre:"ICA",           archivo:"ICA"},
+  {nombre:"JUNÍN",         archivo:"JUNIN"},
+  {nombre:"LA LIBERTAD",   archivo:"LA LIBERTAD"},
+  {nombre:"LAMBAYEQUE",    archivo:"LAMBAYEQUE"},
+  {nombre:"LIMA",          archivo:"LIMA"},
+  {nombre:"LORETO",        archivo:"LORETO"},
+  {nombre:"MADRE DE DIOS", archivo:"MADRE DE DIOS"},
+  {nombre:"MOQUEGUA",      archivo:"MOQUEGUA"},
+  {nombre:"PASCO",         archivo:"PASCO"},
+  {nombre:"PIURA",         archivo:"PIURA"},
+  {nombre:"PUNO",          archivo:"PUNO"},
+  {nombre:"SAN MARTÍN",    archivo:"SAN MARTIN"},
+  {nombre:"TACNA",         archivo:"TACNA"},
+  {nombre:"TUMBES",        archivo:"TUMBES"},
+  {nombre:"UCAYALI",       archivo:"UCAYALI"},
+];
+
+// ═══════════════════════════════════════════════
+// SELECTORES GEO
+// ═══════════════════════════════════════════════
+// ► REEMPLAZA ESTA URL con la de tu implementación de Apps Script (doPost)
+// Apps Script → Implementar → Nueva implementación → Aplicación web → Copiar URL
+// ═══════════════════════════════════════════════════════════
+// CONFIGURACIÓN DE CIERRE Y CONTROL DE VERSIÓN
+// ═══════════════════════════════════════════════════════════
+
+// #AQUI SE CAMBIA HORA — fecha/hora de cierre de la encuesta (hora de Perú UTC-5)
+const FECHA_CIERRE = new Date('2026-07-16T04:59:00Z'); // 15 jul 2026 11:59 PM PET
+
+// #AQUI SE RESETEAN LAS VERSIONES PARA VOLVER A INTENTAR ENVIAR
+// Cambia 'v1' a 'v2', 'v3', etc. para permitir que dispositivos que ya respondieron vuelvan a intentarlo
+const STORAGE_KEY = 'onpe_sv2026_v4';
+
+// ── Verificar cierre ──
+if (new Date() > FECHA_CIERRE) {
+  document.getElementById('msgCerrada').style.display = 'block';
+  document.querySelector('.container').style.display  = 'none';
+  document.querySelector('header').style.display      = 'none';
+}
+
+// ── Verificar si ya respondió este dispositivo ──
+if (localStorage.getItem(STORAGE_KEY)) {
+  document.getElementById('msgYaRespondio').style.display = 'block';
+  document.querySelector('.container').style.display      = 'none';
+  document.querySelector('header').style.display          = 'none';
+}
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-NCyCbK2iaDSCWCYaVz873LldICByzKDkADWSsgvTR4XyKxQfW-wurPho9QPdYBWL/exec';
+
+const selRegion   = document.getElementById('sel-region');
+const selProvincia= document.getElementById('sel-provincia');
+const selDistrito = document.getElementById('sel-distrito');
+const ubigeoHidden= document.getElementById('ubigeo-hidden');
+
+// Poblar regiones
+REGIONES.forEach(r => selRegion.add(new Option(r.nombre, r.archivo)));
+
+// Cache para no refetch al cambiar de región y volver
+const ubigeoCache = {};
+
+selRegion.addEventListener('change', () => {
+  selProvincia.innerHTML = '<option value="">— Seleccionar —</option>';
+  selProvincia.disabled  = true;
+  selDistrito.innerHTML  = '<option value="">— Seleccionar —</option>';
+  selDistrito.disabled   = true;
+  ubigeoHidden.value     = '';
+  selDistrito._data      = null;
+
+  const archivo = selRegion.value;
+
+  // EXTRANJERO: ocultar provincia y distrito
+  const esExtranjero = (selRegion.options[selRegion.selectedIndex]?.text === 'EXTRANJERO');
+  document.getElementById('grupo-provincia').style.display = esExtranjero ? 'none' : '';
+  document.getElementById('grupo-distrito').style.display  = esExtranjero ? 'none' : '';
+  selProvincia.required = !esExtranjero;
+  selDistrito.required  = !esExtranjero;
+
+  if (!archivo || esExtranjero) return;
+
+  if (ubigeoCache[archivo]) { poblarProvincias(ubigeoCache[archivo]); return; }
+
+  // Carga directo desde el repositorio GitHub Pages (ruta relativa)
+  fetch('./ubigeo/' + encodeURIComponent(archivo) + '.json')
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(data => { ubigeoCache[archivo] = data; poblarProvincias(data); })
+    .catch(() => { selProvincia.innerHTML = '<option value="">Error al cargar</option>'; });
+});
+
+function poblarProvincias(data) {
+  selProvincia.innerHTML = '<option value="">— Seleccionar —</option>';
+  Object.keys(data).sort((a,b) => a.localeCompare(b,'es'))
+    .forEach(prov => selProvincia.add(new Option(prov, prov)));
+  selProvincia.disabled = false;
+  selProvincia._data = data;
+}
+
+selProvincia.addEventListener('change', () => {
+  selDistrito.innerHTML = '<option value="">— Seleccionar —</option>';
+  selDistrito.disabled  = true;
+  ubigeoHidden.value    = '';
+  selDistrito._data     = null;
+
+  const prov = selProvincia.value;
+  const data = selProvincia._data;
+  if (!prov || !data || !data[prov]) return;
+
+  const distritos = data[prov];
+  Object.keys(distritos).sort((a,b) => a.localeCompare(b,'es'))
+    .forEach(dist => selDistrito.add(new Option(dist, dist)));
+  selDistrito.disabled = false;
+  selDistrito._data = distritos;
+});
+
+selDistrito.addEventListener('change', () => {
+  const dist = selDistrito.value;
+  const data = selDistrito._data;
+  ubigeoHidden.value = (dist && data) ? (data[dist] || '') : '';
+});
+
+// ═══════════════════════════════════════════════
+// SKIP LOGIC
+// ═══════════════════════════════════════════════
+function radio(name){ return document.querySelector(`input[name="${name}"]:checked`); }
+
+document.querySelectorAll('input[name="voto"]').forEach(r => r.addEventListener('change', () => {
+  const val = radio('voto')?.value;
+  if (val === 'Si') {
+    // Mostrar P5 (¿tuvo inconveniente?), ocultar P6 hasta que responda P5
+    document.getElementById('p2').classList.remove('hidden');
+    document.getElementById('p3').classList.add('hidden');
+    document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x => x.checked = false);
+    // Limpiar respuesta previa de inconveniente si venía de "No"
+    document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
+  } else if (val === 'No') {
+    // Saltar P5, ir directo a P6 (checkboxes de tipos de inconveniente)
+    document.getElementById('p2').classList.add('hidden');
+    document.querySelectorAll('input[name="inconveniente"]').forEach(x => x.checked = false);
+    document.getElementById('p3').classList.remove('hidden');
+  }
+}));
+
+document.querySelectorAll('input[name="inconveniente"]').forEach(r => r.addEventListener('change', () => {
+  const val = radio('inconveniente')?.value;
+  document.getElementById('p3').classList.toggle('hidden', val !== 'Si');
+  if (val !== 'Si') document.querySelectorAll('input[name="inconvenienteTipo"]').forEach(x=>x.checked=false);
+}));
+
+document.querySelectorAll('input[name="seInformo"]').forEach(r => r.addEventListener('change', () => {
+  const val = radio('seInformo')?.value;
+  document.getElementById('p5').classList.toggle('hidden', val !== 'Si');
+  document.getElementById('bloque3').classList.toggle('hidden', val !== 'Si');
+  if (val !== 'Si') {
+    document.querySelectorAll('input[name="medios"]').forEach(x=>x.checked=false);
+    document.querySelectorAll('input[name="recuerdaCampana"]').forEach(x=>x.checked=false);
+    document.querySelectorAll('input[name="claridadCampana"]').forEach(x=>x.checked=false);
+    document.querySelectorAll('input[name="campMasTiempo"]').forEach(x=>x.checked=false);
+    document.querySelectorAll('input[name="queTransmitir"]').forEach(x=>x.checked=false);
+  }
+}));
+
+// ═══════════════════════════════════════════════
+// EXCLUSIVIDAD: "Nada en particular" en P7
+// ═══════════════════════════════════════════════
+document.querySelectorAll('input[name="recuerdaCampana"]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const nada = document.querySelector('input[name="recuerdaCampana"][value="Nada en particular"]');
+    if (cb.value === 'Nada en particular' && cb.checked) {
+      // Marcar "Nada" → desmarcar todas las demás
+      document.querySelectorAll('input[name="recuerdaCampana"]').forEach(x => {
+        if (x !== cb) x.checked = false;
+      });
+    } else if (cb.checked && nada) {
+      // Marcar cualquier otra → desmarcar "Nada"
+      nada.checked = false;
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════
+// ENVÍO — UI OPTIMISTA
+// La página de éxito se muestra al instante.
+// El guardado ocurre en segundo plano.
+// ═══════════════════════════════════════════════
+document.getElementById('encuesta').addEventListener('submit', function(e){
+  e.preventDefault();
+  const err = document.getElementById('msgError');
+  err.style.display = 'none';
+
+  // ── Validaciones completas ──
+  function visible(id){ const el=document.getElementById(id); return el && !el.classList.contains('hidden'); }
+  function showErr(msg){ err.textContent=msg; err.style.display='block'; window.scrollTo({top:err.offsetTop-20,behavior:'smooth'}); }
+
+  if (!radio('voto'))       { showErr('Por favor responda la pregunta 13.'); return; }
+  if (visible('p2') && !radio('inconveniente'))
+                            { showErr('Por favor responda la pregunta 14.'); return; }
+  if (visible('p3') && !document.querySelector('input[name="inconvenienteTipo"]:checked'))
+                            { showErr('Por favor responda la pregunta 9.'); return; }
+  if (!radio('seInformo'))  { showErr('Por favor responda la pregunta 13.'); return; }
+  if (visible('p5') && !document.querySelector('input[name="medios"]:checked'))
+                            { showErr('Por favor responda la pregunta 14.'); return; }
+  if (visible('bloque3')) {
+    if (!radio('claridadCampana'))  { showErr('Por favor responda la pregunta 9.'); return; }
+    if (!document.querySelector('input[name="recuerdaCampana"]:checked'))
+                                    { showErr('Por favor responda la pregunta 13.'); return; }
+    if (!document.querySelector('input[name="queTransmitir"]:checked'))
+                                    { showErr('Por favor responda la pregunta 12.'); return; }
+    if (!radio('campMasTiempo'))    { showErr('Por favor responda la pregunta 14.'); return; }
+  }
+  if (!radio('opinionONPE'))    { showErr('Por favor responda la pregunta 13.'); return; }
+  if (!radio('calificacionOrg')){ showErr('Por favor responda la pregunta 14.'); return; }
+  if (!radio('grupoEtario'))    { showErr('Por favor indique su grupo etario (pregunta 1).'); return; }
+  if (!radio('sexo'))           { showErr('Por favor indique su sexo (pregunta 2).'); return; }
+  const esExtranjeroVal = (selRegion.options[selRegion.selectedIndex]?.text === 'EXTRANJERO');
+  if (!selRegion.value){ showErr('Por favor indique su región.'); return; }
+  if (!esExtranjeroVal && (!selProvincia.value || !selDistrito.value)){
+    showErr('Por favor complete su provincia y distrito.'); return;
+  }
+
+  const getChecks = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);
+
+  const formData = {
+    voto:              radio('voto')?.value || '',
+    inconveniente:     radio('inconveniente')?.value || '',
+    inconvenienteTipo: getChecks('inconvenienteTipo'),
+    seInformo:         radio('seInformo')?.value || '',
+    medios:            getChecks('medios'),
+    claridadCampana:   radio('claridadCampana')?.value || '',
+    recuerdaCampana:   getChecks('recuerdaCampana'),
+    campMasTiempo:     radio('campMasTiempo')?.value || '',
+    queTransmitir:     getChecks('queTransmitir'),
+    opinionONPE:       radio('opinionONPE')?.value || '',
+    calificacionOrg:   radio('calificacionOrg')?.value || '',
+    grupoEtario:       radio('grupoEtario')?.value || '',
+    sexo:              radio('sexo')?.value || '',
+    region:            selRegion.options[selRegion.selectedIndex]?.text || '',
+    provincia:         selProvincia.value || '',
+    distrito:          selDistrito.value || '',
+    ubigeo:            ubigeoHidden.value
+  };
+
+  // ► Mostrar éxito inmediatamente (no esperar al servidor)
+  localStorage.setItem(STORAGE_KEY, '1'); // marcar dispositivo como ya respondido
+  document.getElementById('encuesta').style.display = 'none';
+  document.getElementById('msgExito').style.display  = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  // ► Guardar en segundo plano vía fetch → Apps Script doPost
+  // Codificamos como form-urlencoded: sobrevive la redirección interna de Apps Script
+  // Apps Script lo lee por e.parameter.data
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: new URLSearchParams({ data: JSON.stringify(formData) })
+  }).catch(er => {
+    console.error('[ONPE Encuesta] Error al guardar:', er);
+  });
+});
+</script>
+</body>
+</html>

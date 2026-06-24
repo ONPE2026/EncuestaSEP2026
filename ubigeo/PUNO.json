@@ -1,0 +1,138 @@
+{
+  "PUNO": {
+    "PUNO": "210101",
+    "ACORA": "210102",
+    "AMANTANI": "210103",
+    "ATUNCOLLA": "210104",
+    "CAPACHICA": "210105",
+    "CHUCUITO": "210106",
+    "COATA": "210107",
+    "HUATA": "210108",
+    "MAÑAZO": "210109",
+    "PAUCARCOLLA": "210110",
+    "PICHACANI": "210111",
+    "PLATERIA": "210112",
+    "SAN ANTONIO": "210113",
+    "TIQUILLACA": "210114",
+    "VILQUE": "210115"
+  },
+  "AZANGARO": {
+    "AZANGARO": "210201",
+    "ACHAYA": "210202",
+    "ARAPA": "210203",
+    "ASILLO": "210204",
+    "CAMINACA": "210205",
+    "CHUPA": "210206",
+    "JOSE DOMINGO CHOQUEHUANCA": "210207",
+    "MUÑANI": "210208",
+    "POTONI": "210209",
+    "SAMAN": "210210",
+    "SAN ANTON": "210211",
+    "SAN JOSE": "210212",
+    "SAN JUAN DE SALINAS": "210213",
+    "SANTIAGO DE PUPUJA": "210214",
+    "TIRAPATA": "210215"
+  },
+  "CARABAYA": {
+    "MACUSANI": "210301",
+    "AJOYANI": "210302",
+    "AYAPATA": "210303",
+    "COASA": "210304",
+    "CORANI": "210305",
+    "CRUCERO": "210306",
+    "ITUATA": "210307",
+    "OLLACHEA": "210308",
+    "SAN GABAN": "210309",
+    "USICAYOS": "210310"
+  },
+  "CHUCUITO": {
+    "JULI": "210401",
+    "DESAGUADERO": "210402",
+    "HUACULLANI": "210403",
+    "KELLUYO": "210404",
+    "PISACOMA": "210405",
+    "POMATA": "210406",
+    "ZEPITA": "210407"
+  },
+  "EL COLLAO": {
+    "ILAVE": "210501",
+    "CAPAZO": "210502",
+    "PILCUYO": "210503",
+    "SANTA ROSA": "210504",
+    "CONDURIRI": "210505"
+  },
+  "HUANCANE": {
+    "HUANCANE": "210601",
+    "COJATA": "210602",
+    "HUATASANI": "210603",
+    "INCHUPALLA": "210604",
+    "PUSI": "210605",
+    "ROSASPATA": "210606",
+    "TARACO": "210607",
+    "VILQUE CHICO": "210608"
+  },
+  "LAMPA": {
+    "LAMPA": "210701",
+    "CABANILLA": "210702",
+    "CALAPUJA": "210703",
+    "NICASIO": "210704",
+    "OCUVIRI": "210705",
+    "PALCA": "210706",
+    "PARATIA": "210707",
+    "PUCARA": "210708",
+    "SANTA LUCIA": "210709",
+    "VILAVILA": "210710"
+  },
+  "MELGAR": {
+    "AYAVIRI": "210801",
+    "ANTAUTA": "210802",
+    "CUPI": "210803",
+    "LLALLI": "210804",
+    "MACARI": "210805",
+    "NUÑOA": "210806",
+    "ORURILLO": "210807",
+    "SANTA ROSA": "210808",
+    "UMACHIRI": "210809"
+  },
+  "MOHO": {
+    "MOHO": "210901",
+    "CONIMA": "210902",
+    "HUAYRAPATA": "210903",
+    "TILALI": "210904"
+  },
+  "SAN ANTONIO DE PUTINA": {
+    "PUTINA": "211001",
+    "ANANEA": "211002",
+    "PEDRO VILCA APAZA": "211003",
+    "QUILCAPUNCU": "211004",
+    "SINA": "211005"
+  },
+  "SAN ROMAN": {
+    "JULIACA": "211101",
+    "CABANA": "211102",
+    "CABANILLAS": "211103",
+    "CARACOTO": "211104",
+    "SAN MIGUEL": "211105"
+  },
+  "SANDIA": {
+    "SANDIA": "211201",
+    "CUYOCUYO": "211202",
+    "LIMBANI": "211203",
+    "PATAMBUCO": "211204",
+    "PHARA": "211205",
+    "QUIACA": "211206",
+    "SAN JUAN DEL ORO": "211207",
+    "YANAHUAYA": "211208",
+    "ALTO INAMBARI": "211209",
+    "SAN PEDRO DE PUTINA PUNCO": "211210"
+  },
+  "YUNGUYO": {
+    "YUNGUYO": "211301",
+    "ANAPIA": "211302",
+    "COPANI": "211303",
+    "CUTURAPI": "211304",
+    "OLLARAYA": "211305",
+    "TINICACHI": "211306",
+    "UNICACHI": "211307"
+  }
+}

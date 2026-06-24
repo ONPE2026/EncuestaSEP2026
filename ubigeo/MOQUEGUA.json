@@ -1,0 +1,29 @@
+{
+  "MARISCAL NIETO": {
+    "MOQUEGUA": "180101",
+    "CARUMAS": "180102",
+    "CUCHUMBAYA": "180103",
+    "SAMEGUA": "180104",
+    "SAN CRISTOBAL": "180105",
+    "TORATA": "180106",
+    "SAN ANTONIO": "180107"
+  },
+  "GENERAL SANCHEZ CERRO": {
+    "OMATE": "180201",
+    "CHOJATA": "180202",
+    "COALAQUE": "180203",
+    "ICHUÑA": "180204",
+    "LA CAPILLA": "180205",
+    "LLOQUE": "180206",
+    "MATALAQUE": "180207",
+    "PUQUINA": "180208",
+    "QUINISTAQUILLAS": "180209",
+    "UBINAS": "180210",
+    "YUNGA": "180211"
+  },
+  "ILO": {
+    "ILO": "180301",
+    "EL ALGARROBAL": "180302",
+    "PACOCHA": "180303"
+  }
+}

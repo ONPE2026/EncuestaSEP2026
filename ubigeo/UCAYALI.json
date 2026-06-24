@@ -1,0 +1,29 @@
+{
+  "CORONEL PORTILLO": {
+    "CALLERIA": "250101",
+    "CAMPOVERDE": "250102",
+    "IPARIA": "250103",
+    "MASISEA": "250104",
+    "YARINACOCHA": "250105",
+    "NUEVA REQUENA": "250106",
+    "MANANTAY": "250107"
+  },
+  "ATALAYA": {
+    "RAIMONDI": "250201",
+    "SEPAHUA": "250202",
+    "TAHUANIA": "250203",
+    "YURUA": "250204"
+  },
+  "PADRE ABAD": {
+    "PADRE ABAD": "250301",
+    "IRAZOLA": "250302",
+    "CURIMANA": "250303",
+    "NESHUYA": "250304",
+    "ALEXANDER VON HUMBOLDT": "250305",
+    "HUIPOCA": "250306",
+    "BOQUERON": "250307"
+  },
+  "PURUS": {
+    "PURUS": "250401"
+  }
+}

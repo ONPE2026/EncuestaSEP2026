@@ -1,0 +1,46 @@
+{
+  "CHICLAYO": {
+    "CHICLAYO": "140101",
+    "CHONGOYAPE": "140102",
+    "ETEN": "140103",
+    "ETEN PUERTO": "140104",
+    "JOSE LEONARDO ORTIZ": "140105",
+    "LA VICTORIA": "140106",
+    "LAGUNAS": "140107",
+    "MONSEFU": "140108",
+    "NUEVA ARICA": "140109",
+    "OYOTUN": "140110",
+    "PICSI": "140111",
+    "PIMENTEL": "140112",
+    "REQUE": "140113",
+    "SANTA ROSA": "140114",
+    "SAÑA": "140115",
+    "CAYALTI": "140116",
+    "PATAPO": "140117",
+    "POMALCA": "140118",
+    "PUCALA": "140119",
+    "TUMAN": "140120"
+  },
+  "FERREÑAFE": {
+    "FERREÑAFE": "140201",
+    "CAÑARIS": "140202",
+    "INCAHUASI": "140203",
+    "MANUEL ANTONIO MESONES MURO": "140204",
+    "PITIPO": "140205",
+    "PUEBLO NUEVO": "140206"
+  },
+  "LAMBAYEQUE": {
+    "LAMBAYEQUE": "140301",
+    "CHOCHOPE": "140302",
+    "ILLIMO": "140303",
+    "JAYANCA": "140304",
+    "MOCHUMI": "140305",
+    "MORROPE": "140306",
+    "MOTUPE": "140307",
+    "OLMOS": "140308",
+    "PACORA": "140309",
+    "SALAS": "140310",
+    "SAN JOSE": "140311",
+    "TUCUME": "140312"
+  }
+}
