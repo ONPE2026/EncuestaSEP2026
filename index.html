@@ -479,6 +479,7 @@
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre el trabajo de la ONPE en las elecciones"> <span>Informar sobre el trabajo de la ONPE en las elecciones</span></label>
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre cómo capacitarse como elector o miembro de mesa"> <span>Informar sobre cómo capacitarse, ya sea como elector o miembro de mesa</span></label>
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre cómo saber si uno es miembro de mesa"> <span>Informar sobre cómo saber si uno es miembro de mesa</span></label>
+          <label class="opcion"><input type="checkbox" name="queTransmitir" value="Informar sobre los locales de votación"> <span>Informar sobre los locales de votación</span></label>
           <label class="opcion"><input type="checkbox" name="queTransmitir" value="Otros"> <span>Otros</span></label>
         </div>
       </div>
@@ -776,29 +777,30 @@ document.getElementById('encuesta').addEventListener('submit', function(e){
   function visible(id){ const el=document.getElementById(id); return el && !el.classList.contains('hidden'); }
   function showErr(msg){ err.textContent=msg; err.style.display='block'; window.scrollTo({top:err.offsetTop-20,behavior:'smooth'}); }
 
-  if (!radio('voto'))       { showErr('Por favor responda la pregunta 13.'); return; }
+  if (!radio('grupoEtario'))    { showErr('Por favor responda la pregunta 1.'); return; }
+  if (!radio('sexo'))           { showErr('Por favor responda la pregunta 2.'); return; }
+  const esExtranjeroVal = (selRegion.options[selRegion.selectedIndex]?.text === 'EXTRANJERO');
+  if (!selRegion.value)         { showErr('Por favor responda la pregunta 3 (región).'); return; }
+  if (!esExtranjeroVal && (!selProvincia.value || !selDistrito.value))
+                                { showErr('Por favor complete provincia y distrito en la pregunta 3.'); return; }
+  if (!radio('voto'))           { showErr('Por favor responda la pregunta 4.'); return; }
   if (visible('p2') && !radio('inconveniente'))
-                            { showErr('Por favor responda la pregunta 5.'); return; }
-  if (!radio('seInformo'))  { showErr('Por favor responda la pregunta 13.'); return; }
+                                { showErr('Por favor responda la pregunta 5.'); return; }
+  if (visible('bloqueInconvenientes') && !document.querySelector('input[name="inconvenienteTipo"]:checked'))
+                                { showErr('Por favor responda la pregunta 6.'); return; }
+  if (!radio('seInformo'))      { showErr('Por favor responda la pregunta 7.'); return; }
   if (visible('p5') && !document.querySelector('input[name="medios"]:checked'))
-                            { showErr('Por favor responda la pregunta 14.'); return; }
+                                { showErr('Por favor responda la pregunta 8.'); return; }
   if (visible('bloque3')) {
     if (!radio('claridadCampana'))  { showErr('Por favor responda la pregunta 9.'); return; }
     if (!document.querySelector('input[name="recuerdaCampana"]:checked'))
-                                    { showErr('Por favor responda la pregunta 13.'); return; }
+                                    { showErr('Por favor responda la pregunta 10.'); return; }
+    if (!radio('campMasTiempo'))    { showErr('Por favor responda la pregunta 11.'); return; }
     if (!document.querySelector('input[name="queTransmitir"]:checked'))
                                     { showErr('Por favor responda la pregunta 12.'); return; }
-    if (!radio('campMasTiempo'))    { showErr('Por favor responda la pregunta 14.'); return; }
   }
   if (!radio('opinionONPE'))    { showErr('Por favor responda la pregunta 13.'); return; }
   if (!radio('calificacionOrg')){ showErr('Por favor responda la pregunta 14.'); return; }
-  if (!radio('grupoEtario'))    { showErr('Por favor indique su grupo etario (pregunta 1).'); return; }
-  if (!radio('sexo'))           { showErr('Por favor indique su sexo (pregunta 2).'); return; }
-  const esExtranjeroVal = (selRegion.options[selRegion.selectedIndex]?.text === 'EXTRANJERO');
-  if (!selRegion.value){ showErr('Por favor indique su región.'); return; }
-  if (!esExtranjeroVal && (!selProvincia.value || !selDistrito.value)){
-    showErr('Por favor complete su provincia y distrito.'); return;
-  }
 
   const getChecks = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);
 
